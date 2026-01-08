@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>广州景点导航系统</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="https://api.map.baidu.com/api?type=webgl&v=1.0&ak=B6a7IgjWKJzd4CBwTbAy4hnrF8fbhTf7"></script>
+</head>
+<body>
+    <!-- 侧边栏 -->
+    <div id="sidebar">
+        <h2>广州市景点导航</h2>
+
+        <!-- 基本功能按钮 -->
+        <div class="btn-group">
+            <button onclick="locateMe()" id="locate-btn">📍 定位我</button>
+            <button onclick="toggleTrack()" id="track-btn">👣 <span id="trackBtnText">开始记录</span></button>
+            <button onclick="openAddMarkerModal()">➕ 添加标记</button>
+        </div>
+
+        <!-- 实用功能按钮 -->
+        <div class="btn-group">
+            <button onclick="showWeather()">🌤️ 天气</button>
+            <button onclick="searchNearby()">🔍 周边搜索</button>
+            <button onclick="showFavorites()">⭐ 我的收藏</button>
+        </div>
+
+        <!-- 交通和路径功能 -->
+        <div class="btn-group">
+            <button onclick="showTraffic()">🚦 交通状况</button>
+            <button onclick="openRouteModal()">🗺️ 路径查询</button>
+        </div>
+
+        <!-- 信息展示区 -->
+        <div id="info-panel">
+            <p>欢迎使用广州景点导航系统</p>
+        </div>
+    </div>
+
+    <!-- 添加标记的弹窗 -->
+    <div id="addMarkerModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeAddMarkerModal()">&times;</span>
+            <h3>📍 添加新标记</h3>
+            <input type="text" id="newTitle" placeholder="景点名称">
+            <input type="text" id="newDesc" placeholder="景点简介">
+            <input type="text" id="newFeature" placeholder="景点特点">
+            <input type="text" id="newPhoto" placeholder="照片链接">
+            <button onclick="confirmAddMarker()">✅ 确认添加</button>
+        </div>
+    </div>
+
+    <!-- 路径查询弹窗 -->
+    <div id="routeModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeRouteModal()">&times;</span>
+            <h3>🗺️ 路径查询</h3>
+            <select id="travelMode">
+                <option value="driving">🚗 驾车</option>
+                <option value="transit">🚌 公交</option>
+                <option value="walking">🚶 步行</option>
+                <option value="riding">🚴 骑行</option>
+            </select>
+            <input type="text" id="startPoint" placeholder="起点 (我的位置/地址)" value="我的位置">
+            <input type="text" id="endPoint" placeholder="终点 (景点名称)">
+            <button onclick="startRoute()">开始导航</button>
+        </div>
+    </div>
+
+    <!-- 地图容器 -->
+    <div id="allmap"></div>
+
+    <!-- 加载提示 -->
+    <div id="loading" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.7); color: white; padding: 20px; border-radius: 10px; z-index: 9999;">
+        <div class="loading-spinner"></div>
+        <p>正在加载中...</p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
